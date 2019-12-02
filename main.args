@@ -1,5 +1,5 @@
 -m64
-main.mu
+main.mu test.mu
 --output-file build/main.c
 --include-file ../external.h
 --build-command [[gcc -o build/main build/main.c]]
