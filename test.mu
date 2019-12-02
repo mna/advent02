@@ -13,31 +13,32 @@ Tester struct {
 
   register(t *Tester, name string, fn fun<Assert, void>) {
     t.funs.add(fn)
+    t.fnames.add(name)
   }
 
   run(t *Tester) {
     a := Assert{}
 
-    Stdout.writeLine(format("running {}", t.name))
+    Stdout.writeLine(format(">> running {}", t.name))
     for fn, i in t.funs {
       nm := t.fnames[i]
-      Stdout.writeLine(format("----> {}", nm))
+      Stdout.writeLine(format(".... {}", nm))
       fn(a)
-      Stdout.writeLine(format("PASS: {}", nm))
+      Stdout.writeLine(format("PASS {}", nm))
     }
+    Stdout.writeLine(format("<< done running {}", t.name))
   }
 }
 
 Assert struct {
   fail(a Assert, msg string) {
-    Stdout.writeLine(format("FAIL: {}", msg))
+    Stdout.writeLine(format("FAIL {}", msg))
     abandon()
   }
 
   assert(a Assert, cond bool, msg string) {
     if !cond {
-      Stdout.writeLine(format("FAIL: {}", msg))
-      abandon()
+      a.fail(msg)
     }
   }
 

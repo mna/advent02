@@ -1,20 +1,34 @@
 test() {
-  Stdout.writeLine(">>> TEST")
-  testCase("1,0,0,0,99", "2,0,0,0,99")
-  testCase("2,3,0,3,99", "2,3,0,6,99")
-  testCase("2,4,4,5,99,0", "2,4,4,5,99,9801")
-  testCase("1,1,1,4,99,5,6,0,99", "30,1,1,4,2,5,6,0,99")
-  testCase("1,9,10,3,2,3,11,0,99,30,40,50", "3500,9,10,70,2,3,11,0,99,30,40,50")
-  Stdout.writeLine("<<< TEST")
+  t := Tester("execute")
+  t.register("1", case1)
+  t.register("2", case2)
+  t.register("3", case3)
+  t.register("4", case4)
+  t.register("5", case5)
+  t.run()
 }
 
-testCase(input string, want string) {
+case1(a Assert) {
+  testCase(a, "1,0,0,0,99", "2,0,0,0,99")
+}
+case2(a Assert) {
+  testCase(a, "2,3,0,3,99", "2,3,0,6,99")
+}
+case3(a Assert) {
+  testCase(a, "2,4,4,5,99,0", "2,4,4,5,99,9801")
+}
+case4(a Assert) {
+  testCase(a, "1,1,1,4,99,5,6,0,99", "30,1,1,4,2,5,6,0,99")
+}
+case5(a Assert) {
+  testCase(a, "1,9,10,3,2,3,11,0,99,30,40,50", "3500,9,10,70,2,3,11,0,99,30,40,50")
+}
+
+testCase(a Assert, input string, want string) {
   initial := input.toArrayInt()
   final := initial.clone()
   final.execute()
-  got := final.toCommaString()
-  Stdout.writeLine(format("{} => {} (want {})", initial.toCommaString(), got, want))
-  assert(got == want)
+  a.equal(want, final.toCommaString())
 }
 
 main() {
