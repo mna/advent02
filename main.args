@@ -1,0 +1,6 @@
+-m64
+main.mu
+--output-file build/main.c
+--include-file ../external.h
+--build-command [[gcc -o build/main build/main.c]]
+--run-command [[build/main]]

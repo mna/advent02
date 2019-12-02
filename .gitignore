@@ -1,0 +1,6 @@
+# environment files (e.g. managed by direnv) and other secrets
+/.env*
+
+# output files for different tools, e.g. code coverage
+/*.out
+
